@@ -1,0 +1,7 @@
+{
+	"package": "CLI Project",
+
+	"scripts": {
+		"hellow": ["hello:world"]
+	}
+}

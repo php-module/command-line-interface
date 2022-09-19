@@ -1,17 +1,17 @@
 {
-	"name": "php_modules/command-line-interafce",
+	"name": "php_modules/command-line-interface",
 	"version": "1.0.0",
-	"description": "command-line-interafce module for php.",
+	"description": "command-line-interface module for php.",
   "type": "library",
 	"license": "MIT",
 	"keywords": [
     "Samils CLI",
     "Samils Command Line Interface",
-    "command-line-interafce",
+    "command-line-interface",
     "cli",
     "ils-cli",
     "samils-cli",
-    "samils-command-line-interafce",
+    "samils-command-line-interface",
     "commandlineinterface",
     "samilscommandlineinterface"
 	],
@@ -30,7 +30,7 @@
       "autoload.php"
     ]
 	},
-  "homepage": "https://github.com/samils/command-line-interafce",
+  "homepage": "https://github.com/samils/command-line-interface",
   "readme": "./README.md",
   "authors": [
     {
@@ -42,8 +42,8 @@
   ],
   "support": {
     "email": "base.samils@gmail.com",
-    "issues": "https://github.com/samils/command-line-interafce/issues",
-    "wiki": "https://github.com/samils/command-line-interafce/wiki"
+    "issues": "https://github.com/samils/command-line-interface/issues",
+    "wiki": "https://github.com/samils/command-line-interface/wiki"
   },
 	"require": {
 		"php": ">=5.6.20"

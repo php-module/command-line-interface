@@ -1,4 +1,2 @@
-tests
-site
-
-test.php
+vendor
+composer.lock

@@ -202,9 +202,6 @@ namespace Sammy\Packs\Sami\CommandLineInterface {
 
       $commandFilePath = Command::GetCommandPath ($command);
 
-      ## join ($ds, [$this->commandsDir, $commandFilePath . '.php'])
-
-      $commandFileName = pathinfo ($commandFilePath, 8);
       $commandModule = requires ($commandFilePath);
 
       if ($handler = Command::IsCommandArray ($commandModule)) {

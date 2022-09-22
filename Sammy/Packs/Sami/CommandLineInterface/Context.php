@@ -31,6 +31,7 @@
  * SOFTWARE.
  */
 namespace Sammy\Packs\Sami\CommandLineInterface {
+  use Sammy\Packs\Path;
   use Sammy\Packs\Sami\CommandLineInterface;
   /**
    * Make sure the module base internal class is not
@@ -117,10 +118,14 @@ namespace Sammy\Packs\Sami\CommandLineInterface {
           break;
         }
 
+        $path = new Path;
+
+        $rootDir = $path->join ('~');
+
         $filePathAlternates = [
           $args [$argsLen],
           join (DIRECTORY_SEPARATOR, [
-            realpath (null),
+            $rootDir,
             $args [$argsLen]
           ])
         ];

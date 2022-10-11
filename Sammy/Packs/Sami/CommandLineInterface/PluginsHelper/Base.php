@@ -113,7 +113,7 @@ namespace Sammy\Packs\Sami\CommandLineInterface\PluginsHelper {
         $ref
       );
 
-      return path_to_regex (trim ($ref));
+      return self::pathToRegex (trim ($ref));
     }
   }}
 }

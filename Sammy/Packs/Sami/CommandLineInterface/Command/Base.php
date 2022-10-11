@@ -31,6 +31,7 @@
  * SOFTWARE.
  */
 namespace Sammy\Packs\Sami\CommandLineInterface\Command {
+  use Sammy\Packs\Sami\CommandLineInterface\CoreHelper;
   use Sammy\Packs\Sami\CommandLineInterface\DirFileList;
   use Sammy\Packs\Sami\CommandLineInterface\Context;
   use Sammy\Packs\Sami\CommandLineInterface\Command;
@@ -60,6 +61,7 @@ namespace Sammy\Packs\Sami\CommandLineInterface\Command {
    * -
    */
   trait Base {
+    use CoreHelper;
     use DirFileList;
     use CommandSetHelper;
     use CommandSetAsigners;
@@ -351,7 +353,7 @@ namespace Sammy\Packs\Sami\CommandLineInterface\Command {
          * map whole the command directory list
          */
         foreach (self::$commandDirectoryList as $dir) {
-          $dirRe = path_to_regex ($dir);
+          $dirRe = self::pathToRegex ($dir);
           $dirRe = join ('', ['/^(', $dirRe, '(\/|\\\)*)/']);
           # /^(\/app\/user(\/|\\\)*)/
           if (@preg_match ($dirRe, $path)) {

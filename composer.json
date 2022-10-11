@@ -49,8 +49,6 @@
 		"php": ">=5.6.20"
 	},
   "suggest": {
-    "php_modules/yaml-lite": "",
-    "php_modules/array-full-merge": "",
     "samils/callable-object": ""
   }
 }

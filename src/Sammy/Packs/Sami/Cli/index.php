@@ -107,4 +107,53 @@ namespace Sammy\Packs\Sami\CommandLineInterface {
     Console::Success ('YEEEEEEEEEEEEEEYYYYYYYYY..!!!!!!!');
   }}
 
+  /**
+   * Samils\Functions
+   * @version 1.0
+   * @author Sammy
+   *
+   * @keywords Samils, ils, ils-global-functions
+   * ------------------------------------
+   * - Autoload, application dependencies
+   *
+   * Make sure the command base internal function is not
+   * declared in the php global scope defore creating
+   * it.
+   * It ensures that the script flux is not interrupted
+   * when trying to run the current command by the cli
+   * API.
+   * ----
+   * @Function Name: puts
+   * @Function Description: Get whole the command docs
+   * @Function Args: $parameters
+   */
+  if (!function_exists ('Sammy\Packs\Sami\CommandLineInterface\puts')) {
+  /**
+   * @version 1.0
+   *
+   * THE CURRENT ILS FUNCTION IS PROVIDED
+   * TO AID THE DEVELOPMENT PROCESS IN ORDER
+   * IT GET IN THE SAME WAY WHEN MOVING IT FROM
+   * ANOTHER TO ANOTHER ENVIRONMENT.
+   *
+   * Note: on condition that this is an automatically
+   * generated file, it should not be directly changed
+   * without saving whole the changes into the original
+   * repository source.
+   *
+   * @author Agostinho Sam'l
+   * @keywords command-helper, cli-doc, help
+   */
+  Command::Register ('puts', [
+    'name' => 'puts',
+    'handler' => 'puts',
+    'description' => 'Doc the CLI',
+    'aliases' => ['h']
+  ]);
+  function puts ($parameters) {
+    $parameterList = $parameters->all();
+
+    Console::log (join (' ', $parameterList));
+  }}
+
 }

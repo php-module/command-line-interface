@@ -31,6 +31,7 @@
  * SOFTWARE.
  */
 namespace Sammy\Packs\Sami\CommandLineInterface {
+  use Closure;
   /**
    * Make sure the module base internal class is not
    * declared in the php global scope defore creating
@@ -117,75 +118,79 @@ namespace Sammy\Packs\Sami\CommandLineInterface {
 
       list ($parameters, $options) = Arguments::GetAll ();
 
-      #exit ('UUAS -> ' . $generator);
-
       if (isset ($generatorDatas ['templates']) &&
         is_array ($generatorDatas ['templates'])) {
         $templates = $generatorDatas ['templates'];
+      } elseif (isset ($generatorDatas ['templates']) &&
+        ($generatorDatas ['templates'] instanceof Closure)) {
+        $templates = call_user_func_array ($generatorDatas ['templates'], [$parameters, $options]);
       }
 
-      foreach ($templates as $key => $template) {
-        $templateDatas = [];
-        $name = $parameters->second;
+      if (is_array ($templates)) {
+        /**
+         * Map the templates array and generate each of them
+         * if current is not being skipped
+         */
+        foreach ($templates as $key => $template) {
+          $templateDatas = [];
+          $name = $parameters->second;
 
-        $templateKey = $key;
+          $templateKey = $key;
 
-        if (!(is_string ($templateKey) &&
-            !empty ($templateKey))) {
-          $templateKey = $template;
+          if (!(is_string ($templateKey) &&
+              !empty ($templateKey))) {
+            $templateKey = $template;
+          }
+
+          if (is_string ($templateKey) &&
+            !empty ($templateKey) &&
+            isset ($generatorDatas [$templateKey]) &&
+            is_array ($generatorDatas [$templateKey])) {
+            $templateDatas = $generatorDatas [$templateKey];
+          }
+
+          $props = array_merge ($options->all (), [
+            'name' => $name
+          ]);
+
+          # Verify if there is a rename funciton
+          if (isset ($templateDatas ['props']) &&
+            is_callable ($templateDatas ['props'])) {
+            $defaultProps = call_user_func ($templateDatas ['props'], $props);
+
+            $props = array_merge ($props, $defaultProps);
+          }
+
+          # Verify if there is a rename funciton
+          if (isset ($templateDatas ['rename']) &&
+            is_callable ($templateDatas ['rename'])) {
+            $props ['name'] = call_user_func ($templateDatas ['rename'], $name);
+          }
+
+          # verify if it has to skip the current
+          # template generation
+          $sikpperName = join ('-', ['skip', $templateKey]);
+
+          if ($options->$sikpperName) {
+            continue;
+          }
+
+          $templateDatas = array_merge ($templateDatas, [
+            'props' => $props
+          ]);
+
+          Template::Generate ($template, $templateDatas);
+
+          #$props = addslashes (json_encode ($props));
+
+          #exit ($props);
+
+          #system ('php samils template:draw '.$template.' --props="' . $props . '" > templateOutPut-'.$template.'.php');
+
+          #echo 'Template => ', $template, "\n";
+          #print_r($templateDatas);
+          #echo "\n\n\n";
         }
-
-        if (is_string ($templateKey) &&
-          !empty ($templateKey) &&
-          isset ($generatorDatas [$templateKey]) &&
-          is_array ($generatorDatas [$templateKey])) {
-          $templateDatas = $generatorDatas [$templateKey];
-        }
-
-        $props = array_merge ($options->all (), [
-          'name' => $name
-        ]);
-
-        # Verify if there is a rename funciton
-        if (isset ($templateDatas ['props']) &&
-          is_callable ($templateDatas ['props'])) {
-          $defaultProps = call_user_func ($templateDatas ['props'], $props);
-
-          $props = array_merge ($props, $defaultProps);
-        }
-
-        # Verify if there is a rename funciton
-        if (isset ($templateDatas ['rename']) &&
-          is_callable ($templateDatas ['rename'])) {
-          $props ['name'] = call_user_func ($templateDatas ['rename'], $name);
-        }
-
-        # verify if it has to skip the current
-        # template generation
-        $sikpperName = join ('-', ['skip', $templateKey]);
-
-        if ($options->$sikpperName) {
-          continue;
-        }
-
-        $templateDatas = array_merge ($templateDatas, [
-          'props' => $props
-        ]);
-
-        #print_r($templateDatas);
-        #exit (0);
-
-        Template::Generate ($template, $templateDatas);
-
-        #$props = addslashes (json_encode ($props));
-
-        #exit ($props);
-
-        #system ('php samils template:draw '.$template.' --props="' . $props . '" > templateOutPut-'.$template.'.php');
-
-        #echo 'Template => ', $template, "\n";
-        #print_r($templateDatas);
-        #echo "\n\n\n";
       }
 
       if (isset ($generatorDatas ['include']) &&

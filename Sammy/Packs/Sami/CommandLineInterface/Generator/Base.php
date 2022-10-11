@@ -31,6 +31,7 @@
  * SOFTWARE.
  */
 namespace Sammy\Packs\Sami\CommandLineInterface\Generator {
+  use Closure;
   use Sammy\Packs\Sami\CommandLineInterface\Context;
   use Sammy\Packs\Sami\CommandLineInterface\Console;
   use Sammy\Packs\Sami\CommandLineInterface\DirFileList;
@@ -96,7 +97,7 @@ namespace Sammy\Packs\Sami\CommandLineInterface\Generator {
     private static function validGeneratorDatas ($datas) {
       if (!(is_array ($datas) &&
         isset ($datas ['templates']) &&
-        is_array ($datas ['templates']))) {
+        (is_array ($datas ['templates']) || $datas ['templates'] instanceof Closure))) {
         return (boolean)(
           is_array ($datas) &&
           isset ($datas ['includes']) &&

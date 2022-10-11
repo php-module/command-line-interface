@@ -211,5 +211,14 @@ namespace Sammy\Packs\Sami\CommandLineInterface {
         return true;
       }
     }
+
+    private static function pathToRegex (string $path) {
+      $specialCharsList = '/[\/\^\$\[\]\{\}\(\)\\\\.]/';
+
+      return preg_replace_callback (
+        $specialCharsList, function ($match) {
+          return '\\' . $match[0];
+      }, (string)$path);
+    }
   }}
 }

@@ -321,8 +321,8 @@ namespace Sammy\Packs\Sami\CommandLineInterface {
       }
     }
 
-    public function registerScript ($script, $command) {
-      $this->registerScriptList ([(string)$script => $command]);
+    public function registerScript (string $script, $command) {
+      $this->registerScriptList ([$script => $command]);
     }
 
     public function registerCommandDir ($dir = null) {

@@ -140,6 +140,14 @@ namespace Sammy\Packs\Sami {
         $args = preg_split ('/\s+/', $args);
       }
 
+      $mainApplicationModuleConfig = requires ('~/module.json');
+
+      if (is_array ($mainApplicationModuleConfig)
+        && isset ($mainApplicationModuleConfig ['scripts'])
+        && is_array ($mainApplicationModuleConfig ['scripts'])) {
+        $this->registerScriptList ($mainApplicationModuleConfig ['scripts']);
+      }
+
       $this->trigger ('before-run');
 
       #exit (self::moduleDir () . '/commands');
